@@ -1,0 +1,16 @@
+Given a table containing information about bank deposits and withdrawals made using Paypal, write a query to retrieve the final account balance for each account, taking into account all the transactions recorded in the table with the assumption that there are no missing transactions.
+
+transactions Table:
+Column Name	           Type
+transaction_id	       integer
+account_id	           integer
+amount	               decimal
+transaction_type	     varchar
+
+
+Solution:
+SELECT account_id,
+(sum(case when transaction_type = 'Deposit' then amount end) - 
+sum(case when transaction_type = 'Withdrawal' then amount end) ) as final_amount
+ FROM transactions 
+group by account_id;
